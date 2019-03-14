@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Btn_Create_QRCode : MonoBehaviour
+
+public class Btn_Create_QRCode_Back : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,6 @@ public class Btn_Create_QRCode : MonoBehaviour
     }
     public void ButtonClick()
     {
-        SceneManager.LoadScene("Create_QRCode");
+        SceneManager.LoadScene("User");
     }
 }

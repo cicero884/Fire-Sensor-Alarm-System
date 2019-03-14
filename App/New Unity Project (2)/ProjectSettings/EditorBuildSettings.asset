@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu/User/Scan_QRCode.unity
     guid: c96a978dfc061924e92ef11ee38ca1c9
+  - enabled: 1
+    path: Assets/Scenes/Menu/User/Create_QRCode.unity
+    guid: 143c634a56f013441a946021d9b9feb9
   m_configObjects: {}
