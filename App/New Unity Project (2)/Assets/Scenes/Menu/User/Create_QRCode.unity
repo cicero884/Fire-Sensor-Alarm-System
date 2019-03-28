@@ -112,6 +112,49 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &4593168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4593170}
+  - component: {fileID: 4593169}
+  m_Layer: 0
+  m_Name: ToastMessage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &4593169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fd55d83195aa38418ff06c7275a72c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &4593170
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593168}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 540, y: 1260, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &127236702
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,6 +882,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputText: {fileID: 427507576}
   img: {fileID: 878836654}
+  successMsg: "QRCode\u7522\u751F\u6210\u529F!"
+  nullInputMsg: "\u8F38\u5165\u6587\u5B57\u4E0D\u5F97\u70BA\u7A7A!"
 --- !u!1 &1239036099
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +954,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: "\u8ACB\u8F38\u5165\u6587\u5B57..."
 --- !u!222 &1239036102
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1063,6 +1108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputText: {fileID: 427507576}
   img: {fileID: 878836654}
+  successMsg: "QRCode\u8207\u6587\u5B57\u6E05\u7A7A\u5B8C\u6210!"
 --- !u!1 &1488398733
 GameObject:
   m_ObjectHideFlags: 0
