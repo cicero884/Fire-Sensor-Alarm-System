@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 5bfc3c3084c02f946b46c4fd672cd179
+  - enabled: 1
+    path: Assets/Scenes/Menu/FireFighter.unity
+    guid: 1879e584a02c6f24aac9e7e38075e242
+  - enabled: 1
+    path: Assets/Scenes/Menu/User.unity
+    guid: 5f7f54f991242c44592ea252564683a7
+  - enabled: 1
+    path: Assets/Scenes/Menu/User/Scan_QRCode.unity
+    guid: c96a978dfc061924e92ef11ee38ca1c9
+  - enabled: 1
+    path: Assets/Scenes/Menu/User/Create_QRCode.unity
+    guid: 143c634a56f013441a946021d9b9feb9
+  m_configObjects: {}
