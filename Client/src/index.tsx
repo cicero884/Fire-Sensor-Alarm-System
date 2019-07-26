@@ -1,6 +1,6 @@
 // app entry
 import { AppRegistry, Platform } from "react-native";
-import { App } from "./screens";
+import App from "./components/App";
 import { Config } from "./utils";
 
 // register the app
