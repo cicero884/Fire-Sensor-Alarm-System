@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Thu Jul 25 08:19:52 CST 2019
+#Sat Aug 17 01:16:23 CST 2019
 5.base=/home/nightkirie/Code/git/Fire-Sensor-Alarm-System/Client/android/app/build/intermediates/transforms/mergeJniLibs/debug/0
 42.base=/home/nightkirie/Code/git/Fire-Sensor-Alarm-System/Client/android/app/build/intermediates/transforms/mergeJniLibs/debug/0
 22.path=lib/x86_64/libyoga.so

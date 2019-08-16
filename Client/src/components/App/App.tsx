@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Platform, SafeAreaView, StyleSheet } from "react-native";
-import { Instructions } from '../../components/Instructions';
-import { Welcome } from '../../components/Welcome';
+import * as Animatable from 'react-native-animatable';
+
+
+
 
 const styles = StyleSheet.create({
 	container: {
@@ -13,17 +15,10 @@ const styles = StyleSheet.create({
 });
 
 const App = () => {
-	const instructions = Platform.select({
-		android:
-			"Double tap R on your keyboard to reload,\nShake or press menu button for dev menu",
-		ios: "Press Cmd+R to reload,\nCmd+D or shake for dev menu",
-		web: "Fuck you"
-	});
-
 	return (
 		<SafeAreaView style={styles.container}>
-			<Instructions instructions={instructions} />
-			<Welcome name="Human" />
+			<Animatable.Text animation="slideInDown" iterationCount={5} direction="alternate">Up and down you go</Animatable.Text>
+
 		</SafeAreaView>
 	);
 };

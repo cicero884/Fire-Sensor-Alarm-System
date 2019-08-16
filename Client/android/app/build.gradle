@@ -102,7 +102,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example"
+        applicationId "com.fsas"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

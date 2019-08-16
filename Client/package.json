@@ -1,5 +1,5 @@
 {
-  "name": "example",
+  "name": "FSAS",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,21 +10,33 @@
     "test": "jest --coverage",
     "watch": "jest --watch",
     "lint": "tsc && tslint --fix -p tsconfig.json -c tslint.json",
-    "reset": "watchman watch-del-all; rm -rf /tmp/metro-bundler-cache-*; rm -rf ./android/build; rm -rf ./android/.gradle; rm -rf ./android/app/build; rm -rf ~/Library/Developer/Xcode/DerivedData; rm -rf /tmp/haste-map-react-native-packager-*; rm -rf ./ios/build; yarn install; pod install --project-directory=ios; react-native start --reset-cache"
+    "reset": "watchman watch-del-all; rm -rf /tmp/metro-bundler-cache-*; rm -rf ./android/build; rm -rf ./android/.gradle; rm -rf ./android/app/build; rm -rf ~/Library/Developer/Xcode/DerivedData; rm -rf /tmp/haste-map-react-native-packager-*; rm -rf ./ios/build; yarn install; pod install --project-directory=ios; react-native start --reset-cache",
+    "ts": "tsc",
+    "ts-watch": "tsc -w",
+    "ts-lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "ts-lint-watch": "yarn ts-lint; chokidar 'src/**/*.{ts,tsx}' -c 'yarn ts-lint'",
+    "test-watch": "jest --watch",
+    "log-android": "react-native log-android"
   },
   "dependencies": {
+    "@types/react-router-native": "^4.2.4",
+    "@types/styled-components": "^4.1.18",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-native": "0.59.5",
+    "react-native-animatable": "^1.3.2",
     "react-native-elements": "^1.1.0",
     "react-native-web": "0.11.2",
     "react-navigation": "^3.11.1",
+    "react-router-dom": "^5.0.1",
+    "react-router-native": "^5.0.1",
     "react-scripts": "3.0.0"
   },
   "devDependencies": {
     "@types/jest": "24.0.12",
     "@types/react": "16.8.15",
     "@types/react-native": "0.57.51",
+    "@types/react-router-dom": "^4.3.4",
     "@types/react-test-renderer": "16.8.1",
     "babel-jest": "24.7.1",
     "jest": "24.7.1",
