@@ -16,9 +16,9 @@ interface UserContext {
         lastName: string
         email: string
         password: string
-        isLandlord: boolean
+        isFireFighter: boolean
     }) => void
-    logIn: (email: string, password: string, isLandlord: boolean) => void
+    logIn: (email: string, password: string, isFireFighter: boolean) => void
     logOut: () => void
 }
 
@@ -59,7 +59,7 @@ export const UserProvider: React.FunctionComponent<{}> = props => {
         lastName: string
         email: string
         password: string
-        isLandlord: boolean
+        isFireFighter: boolean
     }) => {
         const { firstName, lastName, email, password } = args
         await accountsPassword.createUser({

@@ -34,11 +34,11 @@ export default () => {
                 </MainLayout>
             ) : (
                     <Switch>
-                        <Route path="/login" component={Login} />
+                        <Route path="/citizen/login" component={Login} />
                         <Route path="/signup" component={Login} />
-                        <Route path="/landlord/login" component={Login} />
-                        <Route path="/landlord/signup" component={Login} />
-                        <Route path="*" render={() => <Redirect to="/login" />} />
+                        <Route path="/firefighter/citizen/login" component={Login} />
+                        <Route path="/firefighter/signup" component={Login} />
+                        <Route path="*" render={() => <Redirect to="/citizen/login" />} />
                     </Switch>
                 )}
         </Router>

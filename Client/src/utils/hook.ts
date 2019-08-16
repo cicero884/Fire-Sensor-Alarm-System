@@ -1,25 +1,11 @@
-import React, { Component } from "react";
-import { View } from "react-native";
+import * as React from 'react'
+import * as H from 'history'
 
-interface hookProps {
-
-}
-
-interface hookState {
-
-}
-
-export default class hook extends Component<hookProps, hookState>{
-
-    public constructor(props : hookProps){
-        super(props);
-        this.state = {};
-    }
-
-    public render() : JSX.Element{
-        return (
-            <View></View>
-        );
-    }
-
+export const useIsFireFighter = (location: H.Location) => {
+  const [isFireFighter, set] = React.useState()
+  React.useEffect(() => {
+    set(location.pathname.indexOf('/firefighter') !== -1)
+    return () => {}
+  })
+  return isFireFighter
 }

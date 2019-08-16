@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { View, Image } from 'react-native'
 import styled from 'styled-components'
-import TabBox, { Tabs } from '../../components/Login/UserTabBox'
+import TabBox, { Tabs } from '../../components/Login/TabBox'
 import { useUserContext } from '../../components/Login/UserContext'
 import LoginForm from '../../components/Login/LoginForm'
 import SignupForm from '../../components/Login/SignupForm'
 import LinkToOtherLogin from '../../components/Login/LinkToOtherLogin'
-import { useIsLandlord } from '../../utils/hooks'
+import { useIsFireFighter } from '../../utils/hooks'
 
 const Wrapper = styled(View)`
     min-height: 100vh;
@@ -46,34 +46,34 @@ export const FormRowWrapper = styled(View)`
 `
 
 const Login = (props: any) => {
-    const isLandlord = useIsLandlord(props.location)
-    const path = isLandlord
-        ? props.location.pathname.substring('/landlord'.length)
+    const isFireFighter = useIsFireFighter(props.location)
+    const path = isFireFighter
+        ? props.location.pathname.substring('/firefighter'.length)
         : props.location.pathname
     const { logIn, signUp } = useUserContext()
     return (
         <Wrapper>
             <LogoWrapper>{<Logo source={{ uri: "http://i.imgur.com/jieL5q9.jpg" }} />}</LogoWrapper>
             <View style={{ width: 600, height: 500 }}>
-                <TabBox activeTab={path} isLandlord={isLandlord}>
+                <TabBox activeTab={path} isFireFighter={isFireFighter}>
                     {path === Tabs.login ? (
                         <LoginForm
                             onSubmit={async (email, password) => {
-                                await logIn(email, password, isLandlord)
+                                await logIn(email, password, isFireFighter)
                                 props.history.push('/')
                             }}
                         />
                     ) : (
                             <SignupForm
                                 onSubmit={async args => {
-                                    await signUp({ ...args, isLandlord })
+                                    await signUp({ ...args, isFireFighter })
                                     props.history.push('/')
                                 }}
                             />
                         )}
                 </TabBox>
             </View>
-            <LinkToOtherLogin isLandlord={isLandlord} />
+            <LinkToOtherLogin isFireFighter={isFireFighter} />
         </Wrapper>
     )
 }

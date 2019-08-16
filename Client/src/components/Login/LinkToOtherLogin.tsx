@@ -8,12 +8,12 @@ const Label = styled(Text)`
   color: var(--light-grayish-blue);
 `
 
-const LinkToOtherLogin = (props: { isLandlord: boolean }) => (
+const LinkToOtherLogin = (props: { isFireFighter: boolean }) => (
   <View style={{ marginTop: 50 }}>
-    {props.isLandlord ? (
+    {props.isFireFighter ? (
       <Label>
         Looking for{' '}
-        <Link to="/login">
+        <Link to="/citizen/login">
           <Label>tenant login</Label>
         </Link>
         ?
@@ -21,7 +21,7 @@ const LinkToOtherLogin = (props: { isLandlord: boolean }) => (
     ) : (
       <Label>
         Looking for{' '}
-        <Link to="/landlord/login">
+        <Link to="/firefighter/citizen/login">
           <Label>landlord login</Label>
         </Link>
         ?

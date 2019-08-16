@@ -9,7 +9,7 @@ import { Link } from '../Router'
 import Box, { Variants as BoxVariants } from '../Shared/Box/Box'
 
 export enum Tabs {
-    login = '/login',
+    login = '/citizen/login',
     signup = '/signup',
 }
 
@@ -49,20 +49,20 @@ const TabText = styled(Text)`
     letter-spacing: -0.91px;
 `
 
-interface UserTabBoxProps {
+interface TabBoxProps {
     children: JSX.Element
     activeTab: Tabs
-    userType: boolean   // 0 for citizen, 1 for firefighter
+    isFireFighter: boolean   
 }
 
 
-const UserTabBox = ({ children, activeTab, userType }: UserTabBoxProps) => (
+const TabBox = ({ children, activeTab, isFireFighter }: TabBoxProps) => (
     <Box width={'600px'} style={{ height: 500 }} variant={BoxVariants.login}>
         <TabRow>
             <TabOuter
                 side={Sides.left}
                 active={activeTab === Tabs.login}
-                to={`${userType ? '/citizen' : '/firefighter'}${Tabs.login}`}
+                to={`${isFireFighter ? '/firefighter' : '/citizen'}${Tabs.login}`}
                 replace
                 component={TouchableWithoutFeedback}
             >
@@ -73,7 +73,7 @@ const UserTabBox = ({ children, activeTab, userType }: UserTabBoxProps) => (
             <TabOuter
                 side={Sides.right}
                 active={activeTab === Tabs.signup}
-                to={`${userType ? '/citizen' : '/firefighter'}${Tabs.signup}`}
+                to={`${isFireFighter ? '/firefighter' : '/citizen'}${Tabs.signup}`}
                 replace
                 component={TouchableWithoutFeedback}
             >
@@ -86,4 +86,4 @@ const UserTabBox = ({ children, activeTab, userType }: UserTabBoxProps) => (
     </Box>
 )
 
-export default UserTabBox
+export default TabBox
