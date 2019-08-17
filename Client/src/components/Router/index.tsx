@@ -3,7 +3,7 @@ import { Router, Route, Switch, Redirect, Link } from './Router'
 import MainLayout from '../MainLayout'
 import Login from '../../screens/Login'
 import Home from '../../screens/Home'
-import { useUserContext } from '../../screens/Login/UserContext'
+import { useUserContext } from '../Login/UserContext'
 
 export default () => {
     const { userState, getUser } = useUserContext()
@@ -35,8 +35,8 @@ export default () => {
             ) : (
                     <Switch>
                         <Route path="/citizen/login" component={Login} />
-                        <Route path="/signup" component={Login} />
-                        <Route path="/firefighter/citizen/login" component={Login} />
+                        <Route path="/citizen/signup" component={Login} />
+                        <Route path="/firefighter/login" component={Login} />
                         <Route path="/firefighter/signup" component={Login} />
                         <Route path="*" render={() => <Redirect to="/citizen/login" />} />
                     </Switch>
