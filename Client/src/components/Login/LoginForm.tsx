@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Formik } from 'formik'
-import Button from '../../../components/Button'
-import Input from '../../../components/Input'
-import { ContentWrapper, FormWrapper } from '../Login'
+import Button from '../Shared/Button'
+import Input from '../Shared/Input'
+import { ContentWrapper, FormWrapper } from '../../screens/Login/Login'
 
 interface LoginFormProps {
     onSubmit: (email: string, password: string) => void
