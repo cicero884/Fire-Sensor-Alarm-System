@@ -6,31 +6,27 @@ import { ContentWrapper, FormWrapper, FormRowWrapper } from '../../screens/Login
 
 interface SignupFormProps {
     onSubmit: (args: { 
-        email: string; 
-        password: string; 
-        firstName: string; 
-        lastName: string }) => void
+        username: string; 
+        password: string;
+        password_recheck: string; }) => void
 }
 
 const SignupForm = ({ onSubmit }: SignupFormProps) => (
     <Formik
-        initialValues={{ email: '', password: '', firstName: '', lastName: '' }}
+        initialValues={{ username: '', password: '', password_recheck: '' }}
         validate={values => {
             const errors: any = {}
-            if (!values.firstName) {
-                errors.firstName = 'Required'
-            }
-            if (!values.lastName) {
-                errors.lastName = 'Required'
-            }
-            if (!values.email) {
-                errors.email = 'Required'
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-                errors.email = 'Invalid email address'
+            if (!values.username) {
+                errors.username = 'Username required'
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.username)) {
+                errors.username = 'Invalid username'
             }
             if (!values.password) {
-                errors.password = 'Required'
+                errors.password = 'Password required'
             }
+            if (!values.password_recheck) {
+                errors.password_recheck = 'Password re-check required'
+            } 
             return errors
         }}
         validateOnBlur={true}
@@ -56,51 +52,40 @@ const SignupForm = ({ onSubmit }: SignupFormProps) => (
         }) => (
                 <ContentWrapper>
                     <FormWrapper>
-                        <FormRowWrapper>
-                            <Input
-                                name="firstName"
-                                label="First Name"
-                                placeholder="John"
-                                value={values.firstName}
-                                onChangeText={text => setFieldValue('firstName', text)}
-                                style={{ width: '45%', marginBottom: 30 }}
-                            />
-                            <Input
-                                name="lastName"
-                                label="Last Name"
-                                placeholder="Doe"
-                                value={values.lastName}
-                                onChangeText={text => setFieldValue('lastName', text)}
-                                style={{ width: '45%', marginBottom: 30 }}
-                            />
-                        </FormRowWrapper>
-                        <FormRowWrapper>
-                            <Input
-                                name="email"
-                                label="Email"
-                                placeholder="you@example.com"
-                                value={values.email}
-                                onChangeText={text => setFieldValue('email', text)}
-                                onBlur={handleBlur}
-                                textContentType="emailAddress"
-                                style={{ width: '45%' }}
-                            />
-                            <Input
-                                name="password"
-                                label="Password"
-                                placeholder="••••••••••"
-                                value={values.password}
-                                onChangeText={text => setFieldValue('password', text)}
-                                onBlur={handleBlur}
-                                textContentType="password"
-                                style={{ width: '45%' }}
-                                secure
-                            />
-                        </FormRowWrapper>
+                        <Input
+                            name="username"
+                            label="username"
+                            placeholder="Enter user name"
+                            value={values.username}
+                            onChangeText={text => setFieldValue('username', text)}
+                            style={{ width: '60%' }}
+                        />
+                        <Input
+                            name="password"
+                            label="password"
+                            placeholder="••••••••••"
+                            value={values.password}
+                            onChangeText={text => setFieldValue('password', text)}
+                            onBlur={handleBlur}
+                            textContentType="password"
+                            style={{ width: '60%' }}
+                            secure
+                        />
+                        <Input
+                            name="password_recheck"
+                            label="password recheck"
+                            placeholder="re-enter password"
+                            value={values.password_recheck}
+                            onChangeText={text => setFieldValue('password_recheck', text)}
+                            onBlur={handleBlur}
+                            textContentType="password"
+                            style={{ width: '60%' }}
+                            secure
+                        />
                     </FormWrapper>
                     <Button onPress={() => handleSubmit()} disabled={isSubmitting}>
                         SIGNUP
-        </Button>
+                    </Button>
                 </ContentWrapper>
             )}
     </Formik>

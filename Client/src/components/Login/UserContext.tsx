@@ -12,7 +12,7 @@ interface UserContext {
     setUserState: (userState: UserState) => void
     getUser: () => void
     signUp: (args: {
-        firstName: string
+        username: string
         lastName: string
         email: string
         password: string
@@ -55,17 +55,17 @@ export const UserProvider: React.FunctionComponent<{}> = props => {
     }
 
     const signUp = async (args: {
-        firstName: string
+        username: string
         lastName: string
         email: string
         password: string
         isFireFighter: boolean
     }) => {
-        const { firstName, lastName, email, password } = args
+        const { username, lastName, email, password } = args
         await accountsPassword.createUser({
             password,
             email,
-            profile: { firstName, lastName },
+            profile: { username, lastName },
         })
         await logIn(email, password)
     }
