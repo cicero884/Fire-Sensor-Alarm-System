@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Formik } from 'formik'
 import Button from '../Shared/Button'
 import Input from '../Shared/Input'
-import { ContentWrapper, FormWrapper, FormRowWrapper } from '../../screens/Login/Login'
+import { ContentWrapper, FormWrapper } from '../../screens/Login/Login'
 
 interface SignupFormProps {
     onSubmit: (args: { 
@@ -65,7 +65,7 @@ const SignupForm = ({ onSubmit }: SignupFormProps) => (
                         <Input
                             name="username"
                             label="username"
-                            placeholder="Enter user name"
+                            placeholder="Enter username"
                             value={values.username}
                             onChangeText={text => setFieldValue('username', text)}
                             style={{ width: '80%' }}
@@ -84,7 +84,7 @@ const SignupForm = ({ onSubmit }: SignupFormProps) => (
                         <Input
                             name="password2"
                             label="password1 recheck"
-                            placeholder="re-enter password1"
+                            placeholder="re-enter password"
                             value={values.password2}
                             onChangeText={text => setFieldValue('password2', text)}
                             onBlur={handleBlur}

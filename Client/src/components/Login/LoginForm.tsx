@@ -5,21 +5,23 @@ import Input from '../Shared/Input'
 import { ContentWrapper, FormWrapper } from '../../screens/Login/Login'
 
 interface LoginFormProps {
-    onSubmit: (email: string, password: string) => void
+    onSubmit: (
+        username: string, 
+        password: string) => void
 }
 
 const LoginForm = ({ onSubmit }: LoginFormProps) => (
     <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ username: '', password: '' }}
         validate={values => {
             const errors: any = {}
-            if (!values.email) {
-                errors.email = 'Required'
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-                errors.email = 'Invalid email address'
+            if (!values.username) {
+                errors.username = 'Required'
+            } else if (/[A-Z0-9@.+-_]{1,150}/i.test(values.username)) {
+                errors.username = 'Invalid username'
             }
             if (!values.password) {
-                errors.password = 'Required'
+                errors.password = 'Password required'
             }
             return errors
         }}
@@ -27,7 +29,7 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => (
         validateOnChange={false}
         onSubmit={async (values, { setSubmitting }) => {
             try {
-                await onSubmit(values.email, values.password)
+                await onSubmit(values.username, values.password)
             } catch (e) {
                 console.log('ERROR', e.message)
             }
@@ -47,14 +49,13 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => (
                 <ContentWrapper>
                     <FormWrapper>
                         <Input
-                            name="email"
-                            label="Email"
-                            placeholder="you@example.com"
-                            value={values.email}
-                            onChangeText={text => setFieldValue('email', text)}
+                            name="username"
+                            label="Username"
+                            placeholder="John Wick"
+                            value={values.username}
+                            onChangeText={text => setFieldValue('username', text)}
                             onBlur={handleBlur}
                             style={{ marginBottom: 30 }}
-                            textContentType="emailAddress"
                         />
                         <Input
                             name="password"
