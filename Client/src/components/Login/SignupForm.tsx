@@ -6,27 +6,37 @@ import { ContentWrapper, FormWrapper, FormRowWrapper } from '../../screens/Login
 
 interface SignupFormProps {
     onSubmit: (args: { 
-        username: string; 
-        password: string;
-        password_recheck: string; }) => void
+        username: string;   // For citizen register
+        password1: string;  // For password
+        password2: string;  // For password recheck
+    }) => void
 }
 
 const SignupForm = ({ onSubmit }: SignupFormProps) => (
     <Formik
-        initialValues={{ username: '', password: '', password_recheck: '' }}
+        initialValues={{ username: '', password1: '', password2: '' }}
         validate={values => {
             const errors: any = {}
             if (!values.username) {
                 errors.username = 'Username required'
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.username)) {
-                errors.username = 'Invalid username'
+            // Username only accepts letters, digits and @/./+/-/_, all in 150 words
+            } else if (/[A-Z0-9@.+-_]{1,150}/i.test(values.username)) {
+                errors.username = '150 characters or fewer. Letters, digits and @/./+/-/_ only.'
             }
-            if (!values.password) {
-                errors.password = 'Password required'
+            if (!values.password1) {
+                errors.password1 = 'Password required'
+            /*  Your password can't be too similar to your other personal information.
+                Your password must contain at least 8 characters.
+                Your password can't be a commonly used password.
+                Your password can't be entirely numeric. */
+            } else if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,150}$/i.test(values.password1)) {
+                errors.password1 = 'At least 8 characters, can\'t be entirely numeric'
             }
-            if (!values.password_recheck) {
-                errors.password_recheck = 'Password re-check required'
-            } 
+            if (!values.password2) {
+                errors.password2 = 'Password re-check required'
+            } else if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,150}$/i.test(values.password2)) {
+                errors.password2 = 'At least 8 characters, can\'t be entirely numeric'
+            }
             return errors
         }}
         validateOnBlur={true}
@@ -58,28 +68,28 @@ const SignupForm = ({ onSubmit }: SignupFormProps) => (
                             placeholder="Enter user name"
                             value={values.username}
                             onChangeText={text => setFieldValue('username', text)}
-                            style={{ width: '60%' }}
+                            style={{ width: '80%' }}
                         />
                         <Input
-                            name="password"
-                            label="password"
+                            name="password1"
+                            label="password1"
                             placeholder="••••••••••"
-                            value={values.password}
-                            onChangeText={text => setFieldValue('password', text)}
+                            value={values.password1}
+                            onChangeText={text => setFieldValue('password1', text)}
                             onBlur={handleBlur}
                             textContentType="password"
-                            style={{ width: '60%' }}
+                            style={{ width: '80%' }}
                             secure
                         />
                         <Input
-                            name="password_recheck"
-                            label="password recheck"
-                            placeholder="re-enter password"
-                            value={values.password_recheck}
-                            onChangeText={text => setFieldValue('password_recheck', text)}
+                            name="password2"
+                            label="password1 recheck"
+                            placeholder="re-enter password1"
+                            value={values.password2}
+                            onChangeText={text => setFieldValue('password2', text)}
                             onBlur={handleBlur}
                             textContentType="password"
-                            style={{ width: '60%' }}
+                            style={{ width: '80%' }}
                             secure
                         />
                     </FormWrapper>
