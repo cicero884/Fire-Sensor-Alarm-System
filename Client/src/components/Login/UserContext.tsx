@@ -13,12 +13,15 @@ interface UserContext {
     getUser: () => void
     signUp: (args: {
         username: string
-        lastName: string
-        email: string
+        password1: string
+        password2: string
+        isFireFighter: boolean
+    }) => void
+    logIn: (args: {
+        username: string
         password: string
         isFireFighter: boolean
     }) => void
-    logIn: (email: string, password: string, isFireFighter: boolean) => void
     logOut: () => void
 }
 

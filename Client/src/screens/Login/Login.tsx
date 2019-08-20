@@ -58,8 +58,8 @@ const Login = (props: any) => {
                 <TabBox activeTab={path} isFireFighter={isFireFighter}>
                     {path === Tabs.login ? (
                         <LoginForm
-                            onSubmit={async (email, password) => {
-                                await logIn(email, password, isFireFighter)
+                            onSubmit={async args=> {
+                                await logIn({ ...args, isFireFighter })
                                 props.history.push('/')
                             }}
                         />
