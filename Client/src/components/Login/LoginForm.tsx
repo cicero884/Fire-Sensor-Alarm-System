@@ -1,13 +1,15 @@
 import * as React from 'react'
+import { Alert } from 'react-native'
 import { Formik } from 'formik'
 import Button from '../Shared/Button'
 import Input from '../Shared/Input'
 import { ContentWrapper, FormWrapper } from '../../screens/Login/Login'
 
 interface LoginFormProps {
-    onSubmit: (
-        username: string, 
-        password: string) => void
+    onSubmit: (args: {
+        username: string
+        password: string
+    }) => void
 }
 
 const LoginForm = ({ onSubmit }: LoginFormProps) => (
@@ -29,9 +31,9 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => (
         validateOnChange={false}
         onSubmit={async (values, { setSubmitting }) => {
             try {
-                await onSubmit(values.username, values.password)
+                await onSubmit({ ...values })
             } catch (e) {
-                console.log('ERROR', e.message)
+                Alert.alert('ERROR', e.message)
             }
             setSubmitting(false)
         }}
@@ -55,7 +57,7 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => (
                             value={values.username}
                             onChangeText={text => setFieldValue('username', text)}
                             onBlur={handleBlur}
-                            style={{ marginBottom: 30 }}
+                            style={{ width: '80%', marginBottom: 30 }}
                         />
                         <Input
                             name="password"
@@ -65,6 +67,7 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => (
                             onChangeText={text => setFieldValue('password', text)}
                             onBlur={handleBlur}
                             textContentType="password"
+                            style={{ width: '80%' }}
                             secure
                         />
                     </FormWrapper>

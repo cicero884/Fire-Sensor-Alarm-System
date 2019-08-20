@@ -49,25 +49,31 @@ export const UserProvider: React.FunctionComponent<{}> = props => {
         }
     }
 
-    const logIn = async (email: string, password: string) => {
-        await accountsPassword.login({ password, user: { email } })
-        await getUser()
+    const logIn = async (args: {
+        username: string
+        password: string
+        isFireFighter: boolean
+    }) => {
+        const { username, password, isFireFighter } = args
+        // TODO: login
+        //await accountsPassword.login({ password, user: { username } })
+        //await getUser()
     }
 
     const signUp = async (args: {
         username: string
-        lastName: string
-        email: string
-        password: string
+        password1: string
+        password2: string
         isFireFighter: boolean
     }) => {
-        const { username, lastName, email, password } = args
-        await accountsPassword.createUser({
-            password,
-            email,
-            profile: { username, lastName },
-        })
-        await logIn(email, password)
+        const { username, password1, password2, isFireFighter } = args
+        // TODO: signUp
+        // await accountsPassword.createUser({
+        //     password,
+        //     email,
+        //     profile: { username, lastName },
+        // })
+        // await logIn(email, password)
     }
 
     const logOut = async () => {

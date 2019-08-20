@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Alert } from 'react-native'
 import { Formik } from 'formik'
 import Button from '../Shared/Button'
 import Input from '../Shared/Input'
@@ -6,9 +7,9 @@ import { ContentWrapper, FormWrapper } from '../../screens/Login/Login'
 
 interface SignupFormProps {
     onSubmit: (args: { 
-        username: string;   // For citizen register
-        password1: string;  // For password
-        password2: string;  // For password recheck
+        username: string    // For citizen register
+        password1: string   // For password
+        password2: string   // For password recheck
     }) => void
 }
 
@@ -45,7 +46,7 @@ const SignupForm = ({ onSubmit }: SignupFormProps) => (
             try {
                 await onSubmit({ ...values })
             } catch (e) {
-                console.log('ERROR', e.message)
+                Alert.alert('ERROR', e.message)
             }
             setSubmitting(false)
         }}
@@ -68,7 +69,7 @@ const SignupForm = ({ onSubmit }: SignupFormProps) => (
                             placeholder="Enter username"
                             value={values.username}
                             onChangeText={text => setFieldValue('username', text)}
-                            style={{ width: '80%' }}
+                            style={{ width: '80%', marginBottom: 30  }}
                         />
                         <Input
                             name="password1"
@@ -78,7 +79,7 @@ const SignupForm = ({ onSubmit }: SignupFormProps) => (
                             onChangeText={text => setFieldValue('password1', text)}
                             onBlur={handleBlur}
                             textContentType="password"
-                            style={{ width: '80%' }}
+                            style={{ width: '80%', marginBottom: 30  }}
                             secure
                         />
                         <Input
