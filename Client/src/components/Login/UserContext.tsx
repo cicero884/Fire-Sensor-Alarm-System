@@ -59,6 +59,7 @@ export const UserProvider: React.FunctionComponent<{}> = props => {
     }) => {
         const { username, password, isFireFighter } = args
         // TODO: login
+        
         //await accountsPassword.login({ password, user: { username } })
         //await getUser()
     }
@@ -71,6 +72,7 @@ export const UserProvider: React.FunctionComponent<{}> = props => {
     }) => {
         const { username, password1, password2, isFireFighter } = args
         // TODO: signUp
+
         // await accountsPassword.createUser({
         //     password,
         //     email,

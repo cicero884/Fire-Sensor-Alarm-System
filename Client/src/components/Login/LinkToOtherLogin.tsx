@@ -17,10 +17,10 @@ const LinkToOtherLogin = (props: { isFireFighter: boolean }) => (
 					<Label>citizen login</Label>
 				</Link>
 			) : (
-					<Link to="/firefighter/citizen/login">
-						<Label>firefighter login</Label>
-					</Link>
-				)}
+				<Link to="/firefighter/login">
+					<Label>firefighter login</Label>
+				</Link>
+			)}
 			?</Label>
 	</View>
 )
