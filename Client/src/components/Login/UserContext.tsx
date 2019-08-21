@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { User } from '../../generated/graphql'
 import { accountsGraphQL, accountsPassword } from '../../utils/apollo'
+import { Alert } from 'react-native';
 
 interface UserState {
     user?: User
@@ -25,7 +26,10 @@ interface UserContext {
     logOut: () => void
 }
 
-const initialState = { user: undefined, loggingIn: true }
+const initialState = { 
+    user: undefined, 
+    loggingIn: true 
+}
 
 export const UserContext = React.createContext<UserContext>({
     userState: initialState,
@@ -59,7 +63,7 @@ export const UserProvider: React.FunctionComponent<{}> = props => {
     }) => {
         const { username, password, isFireFighter } = args
         // TODO: login
-        
+
         //await accountsPassword.login({ password, user: { username } })
         //await getUser()
     }
@@ -82,8 +86,19 @@ export const UserProvider: React.FunctionComponent<{}> = props => {
     }
 
     const logOut = async () => {
-        await accountsGraphQL.logout()
-        setUserState({ user: undefined, loggingIn: false })
+        // TODO: logout
+        await fetch('http://140.116.104.202:8000/userapp/logout/', {
+            credentials: 'include' //使用cookies
+        })
+            .then((response) => {
+                //App依據伺服器回傳結果處理...
+                console.log(response['url']);
+            })
+            .catch((err) => {
+                Alert.alert('ERROR', err.message)
+            })
+        //await accountsGraphQL.logout()
+        //setUserState({ user: undefined, loggingIn: false })
     }
 
     return (
