@@ -1,26 +1,13 @@
-import * as React from "react";
-import { Platform, SafeAreaView, StyleSheet } from "react-native";
-import * as Animatable from 'react-native-animatable';
-
-
-
-
-const styles = StyleSheet.create({
-	container: {
-		alignItems: "center",
-		backgroundColor: "#F5FCFF",
-		flex: 1,
-		justifyContent: "center"
-	}
-});
+import * as React from 'react'
+import Router from '../Router'
+import { UserProvider } from '../Login/UserContext'
 
 const App = () => {
 	return (
-		<SafeAreaView style={styles.container}>
-			<Animatable.Text animation="slideInDown" iterationCount={5} direction="alternate">Up and down you go</Animatable.Text>
-
-		</SafeAreaView>
-	);
-};
+		<UserProvider>
+			<Router />
+		</UserProvider>
+	)
+}
 
 export default App
