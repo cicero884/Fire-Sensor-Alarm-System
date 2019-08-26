@@ -45,7 +45,7 @@ export const UserContext = React.createContext<UserContext>({
     userState: initialState,
     setUserState: () => { },
     getUser: () => { },
-    getCsrf: () => { },
+    getCsrf: (): string => ,
     signUp: () => { },
     logIn: () => { },
     logOut: () => { },
@@ -77,7 +77,7 @@ export const UserProvider: React.FunctionComponent<{}> = props => {
     /* Get csrf token from specific url */
     const getCsrf = async (url: string) => {
         try {
-            const response = await axios.get(url);
+            const response = await axios.get(url);  // get html from url
             if(response.status === 200) {
                 const html = response.data; // Get raw html from server response
                 const $ = cheerio.load(html);   // Using cheerio to parse raw html
@@ -87,7 +87,7 @@ export const UserProvider: React.FunctionComponent<{}> = props => {
                 Alert.alert('ERROR', 'Failed to get csrf token');
             }
         } catch(error) {
-            Alert.alert('ERROR', 'Failed to get csrf token');
+            Alert.alert('ERROR', error);
             console.log(error);
         }
     }
@@ -100,16 +100,29 @@ export const UserProvider: React.FunctionComponent<{}> = props => {
     }) => {
         const { username, password, isFireFighter } = args
         // TODO: login
-        const csrf = await getCsrf('http://140.116.104.202:8000/userapp/login/');
-        const login_response = await axios.post('http://140.116.104.202:8000/userapp/login/', qs.stringify({ 
-                csrfmiddlewaretoken: csrf,  // csrf_token
-                username: username,         
-                password: password,         
-                user_type: (isFireFighter) ? 'firefighters': 'citizens', // For different user login
-            }))
-        Alert.alert('', login_response.data);
-        console.log(login_response.data);
-        await getUser();
+        try {
+            /* Get csrf token */
+            const csrf = await getCsrf('http://140.116.104.202:8000/userapp/login/');
+            /* Try to login, and get response from login page */
+            const login_response = await axios.post('http://140.116.104.202:8000/userapp/login/', qs.stringify({ 
+                    csrfmiddlewaretoken: csrf,  // csrf_token
+                    username: username,         
+                    password: password,         
+                    user_type: (isFireFighter) ? 'firefighters': 'citizens', // For different user login
+                }))
+            console.log(login_response.data);
+            /* If login succeed, means that length of groups array isn't 0 */
+            if(login_response.data['groups'].length > 0) {
+                await getUser();    // Get user data
+                Alert.alert('', login_response.data);
+            /* If login failed */
+            } else {
+                Alert.alert('ERROR', login_response.data);
+            }
+        } catch(error) {
+            Alert.alert('ERROR', error);
+            console.log(error);
+        }
         //await accountsPassword.login({ password, user: { username } })
         //await getUser()
     }
@@ -122,24 +135,32 @@ export const UserProvider: React.FunctionComponent<{}> = props => {
     }) => {
         const { username, password1, password2 } = args
         // TODO: signUp
-        const csrf = await getCsrf('http://140.116.104.202:8000/userapp/registration/');
-        const signup_response = await axios.post('http://140.116.104.202:8000/userapp/registration/', qs.stringify({
-            csrfmiddlewaretoken: csrf,  // csrf_token
-            username: username,
-            password1: password1,
-            password2: password2,
-        }))
-
-        Alert.alert('' ,signup_response.data);
-        console.log(signup_response.data);
+        try {
+            /* Get csrf token */
+            const csrf = await getCsrf('http://140.116.104.202:8000/userapp/registration/');    
+            /* Try to signup, and get response from signup page */
+            const signup_response = await axios.post('http://140.116.104.202:8000/userapp/registration/', qs.stringify({
+                csrfmiddlewaretoken: csrf,  // csrf_token
+                username: username,
+                password1: password1,
+                password2: password2,
+            }))     
+            /* If create new account succeed, login using this account */
+            if(signup_response.data.includes('successfully')) {
+                await logIn({
+                    username: username, 
+                    password: password1, 
+                    isFireFighter: false });   
+            }
+            /* Alert and log response from signup */
+            Alert.alert('' ,signup_response.data);
+            console.log(signup_response.data);
         
-        /* If create new account success */
-        if(signup_response.data.includes('success')) {
-            await logIn({
-                username: username, 
-                password: password1, 
-                isFireFighter: false });   
+        } catch(error) {
+            Alert.alert('ERROR', error);
+            console.log(error);
         }
+       
         // await accountsPassword.createUser({
         //     password,
         //     email,
@@ -150,24 +171,30 @@ export const UserProvider: React.FunctionComponent<{}> = props => {
 
     const logOut = async () => {
         // TODO: logout
-        cosnt status = await axios.get('http://140.116.104.202:8000/userapp/logout/', {
-            credentials: 'include' // use cookies
-        })
-            .then((response) => {
-                // Get response from server
-                console.log(response['url']);
-                return true;
-            })
-            .catch((err) => {
-                Alert.alert('ERROR', err.message)
-            })
-            .then((loggedOut) => {
-                if(loggedOut) {
-                    setUserState({ 
-                        user: undefined, 
-                        loggedIn: false })
-                }
-            })
+        try {
+            const logout_response = await axios.get('http://140.116.104.202:8000/userapp/logout/')
+        } catch(error) {
+            Alert.alert()
+            console.log('ERROR', error);
+        }
+        // cosnt status = await axios.get('http://140.116.104.202:8000/userapp/logout/')
+        //     credentials: 'include' // use cookies
+        // })
+        //     .then((response) => {
+        //         // Get response from server
+        //         console.log(response['url']);
+        //         return true;
+        //     })
+        //     .catch((err) => {
+        //         Alert.alert('ERROR', err.message)
+        //     })
+        //     .then((loggedOut) => {
+        //         if(loggedOut) {
+        //             setUserState({ 
+        //                 user: undefined, 
+        //                 loggedIn: false })
+        //         }
+        //     })
         //await accountsGraphQL.logout()
         //setUserState({ user: undefined, loggedIn: false })
     }
