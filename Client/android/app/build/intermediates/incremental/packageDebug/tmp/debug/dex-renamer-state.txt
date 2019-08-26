@@ -1,4 +1,4 @@
-#Sat Aug 17 01:16:23 CST 2019
+#Mon Aug 26 18:45:24 CST 2019
 base.0=/home/nightkirie/Code/git/Fire-Sensor-Alarm-System/Client/android/app/build/intermediates/transforms/dexMerger/debug/0
 path.0=classes.dex
 renamed.0=classes.dex

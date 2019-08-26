@@ -4,7 +4,7 @@
             "outputFile": "/home/nightkirie/Code/git/Fire-Sensor-Alarm-System/Client/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v28/values-v28.xml",
             "map": [
                 {
-                    "source": "/home/nightkirie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/10f04f107d7d7a00fda1072893257705/res/values-v28/values-v28.xml",
+                    "source": "/home/nightkirie/.gradle/caches/transforms-1/files-1.1/appcompat-1.0.0.aar/883c7ee18da1a6caad204a67891d53e6/res/values-v28/values-v28.xml",
                     "from": {
                         "startLines": "2,3,4,8",
                         "startColumns": "4,4,4,4",
