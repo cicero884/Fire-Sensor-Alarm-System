@@ -4,16 +4,16 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.swmansion.reanimated.ReanimatedPackage;
 import com.airbnb.android.react.maps.MapsPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.devfd.RNGeocoder.RNGeocoderPackage;
 import org.reactnative.camera.RNCameraPackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import com.swmansion.reanimated.ReanimatedPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-
+import org.reactnative.camera.RNCameraPackage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,11 +30,11 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new VectorIconsPackage(),
+            new ReanimatedPackage(),
             new MapsPackage(),
-            new RNGeocoderPackage(),
-            new RNCameraPackage(),
             new RNGestureHandlerPackage(),
-            new ReanimatedPackage()
+            new RNGeocoderPackage(),
+            new RNCameraPackage()
       );
     }
 
