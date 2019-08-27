@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, Alert } from 'react-native';
-import { Button, Input, } from 'react-native-elements';
+import { Button, Input, Icon } from 'react-native-elements';
 import qs from 'qs';
 
 const axios = require('axios');
@@ -77,16 +77,16 @@ export class RegisterPage extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.containerOverlay}>
-                    <Text style={styles.textRegister}>註冊</Text>
+                    <Text style={styles.textRegister}>民眾註冊</Text>
                     <View style={styles.containerInput}>
                         <Input
-                            placeholder={"姓名"}
+                            placeholder={"帳號"}
                             leftIcon={
-                                <Image
-                                    source={require('../../assets/img/ICONS/Profile.png')}
-                                    style={{ tintColor: "#5BC100", height: 17, width: 17 }}
-                                />
-                            }
+                                <Icon 
+                                name='user-circle'
+                                type="font-awesome"
+                                color="#5BC100"
+                                iconStyle={{ height: 24, width: 24 }}/>}
                             errorMessage={this.state.usernameErrorMsg}
                             errorStyle={{ fontSize: 17 }}
                             value={this.state.username}
@@ -102,13 +102,13 @@ export class RegisterPage extends Component {
                             containerStyle={{ paddingHorizontal: 18 }}
                             leftIconContainerStyle={{ marginLeft: 0, paddingTop: 10, }} />
                         <Input
-                            placeholder={"填寫密碼"}
+                            placeholder={"密碼"}
                             leftIcon={
-                                <Image
-                                    source={require('../../assets/img/ICONS/Lock.png')}
-                                    style={{ tintColor: "#5BC100", height: 17, width: 17 }}
-                                />
-                            }
+                                <Icon 
+                                name='lock'
+                                type="font-awesome"
+                                color="#5BC100"
+                                iconStyle={{ height: 24, width: 24 }}/>}
                             errorMessage={this.state.password1ErrorMsg}
                             errorStyle={{ fontSize: 17 }}
                             value={this.state.password1}
@@ -125,17 +125,17 @@ export class RegisterPage extends Component {
                             }}
                             secureTextEntry={true}
                             autoCapitalize='none'
-                            inputStyle={{ paddingTop: 20, paddingLeft: 10 }}
+                            inputStyle={{ paddingTop: 20, paddingLeft: 5 }}
                             containerStyle={{ paddingHorizontal: 18 }}
-                            leftIconContainerStyle={{ marginLeft: 0, paddingTop: 10, }} />
+                            leftIconContainerStyle={{ marginLeft: 5, paddingTop: 10, }} />
                         <Input
                             placeholder={"再次確認密碼"}
                             leftIcon={
-                                <Image
-                                    source={require('../../assets/img/ICONS/Lock.png')}
-                                    style={{ tintColor: "#5BC100", height: 17, width: 17 }}
-                                />
-                            }
+                                <Icon 
+                                name='lock'
+                                type="font-awesome"
+                                color="#5BC100"
+                                iconStyle={{ height: 24, width: 24 }}/>}
                             errorMessage={this.state.password2ErrorMsg}
                             errorStyle={{ fontSize: 17 }}
                             value={this.state.password2}
@@ -148,9 +148,9 @@ export class RegisterPage extends Component {
                             }} 
                             secureTextEntry={true}
                             autoCapitalize='none'
-                            inputStyle={{ paddingTop: 20, paddingLeft: 10 }}
+                            inputStyle={{ paddingTop: 20, paddingLeft: 5 }}
                             containerStyle={{ paddingHorizontal: 18 }}
-                            leftIconContainerStyle={{ marginLeft: 0, paddingTop: 10, }} />
+                            leftIconContainerStyle={{ marginLeft: 5, paddingTop: 10, }} />
                     </View>
                     <Button
                         title={"提交"}

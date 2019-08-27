@@ -1,5 +1,9 @@
 
 import { Alert } from 'react-native';
+import qs from 'qs';
+
+const axios = require('axios');
+const cheerio = require('react-native-cheerio');
 
 export const getUser = async() => {
     // try {

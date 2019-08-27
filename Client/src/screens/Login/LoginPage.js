@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Animated, Image } from 'react-native';
-import { Button, Input, } from 'react-native-elements';
+import { Button, Input, Icon } from 'react-native-elements';
+import { getCsrf } from '../../components/Login/UserAction';
 
 
 export class LoginPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userType: "HouseOwner",   // 1 for householder(defualt), 2 for volunteer, 3 for technician
+            user_type: "citizens",   
             buttonUser1BColor: "#5BC100",
             buttonUser2BColor: "#FFFFFF",
             buttonUser3BColor: "#FFFFFF",
             buttonUser1Color: "#FFFFFF",
             buttonUser2Color: "#5BC100",
             buttonUser3Color: "#5BC100",
-            userPhoneNum: "",
-            userPassword: "",
+            username: "",
+            password: "",
             loginErrorMsg: "",
             registerPageOpacity: new Animated.Value(0),
             registerPageIsVisible: false,
@@ -30,12 +31,12 @@ export class LoginPage extends Component {
     render() {
         return (
             <View style={styles.containerOverlay}>
-                <Text style={styles.textLogin}>登入</Text>
+                <Text style={styles.textLogin}>{this.state.user_type === "citizens" ? "民眾" : "消防員"}登入</Text>
                 <View style={styles.containerButtonUser}>
                     <Button
                         onPress={
                             () => {this.setState({
-                                userType: "HouseOwner",
+                                user_type: "citizens",
                                 buttonUser1BColor: "#5BC100",
                                 buttonUser2BColor: "#FFFFFF",
                                 buttonUser3BColor: "#FFFFFF",
@@ -44,18 +45,19 @@ export class LoginPage extends Component {
                                 buttonUser3Color: "#5BC100",});
                             this.setLoginErrorMsg("");
                         }}
-                        title={"屋主"}
-                        titleStyle={{ color: this.state.buttonUser1Color }}
-                        icon={<Image
-                            source={require('../../assets/img/home-variant.png')}
-                            style={{ tintColor: this.state.buttonUser1Color, height: 17, width: 17 }}
-                        />}
+                        title={"民眾"}
+                        titleStyle={{ color: this.state.buttonUser1Color, fontSize: 18 }}
+                        icon={<Icon 
+                            name='user'
+                            type="font-awesome"
+                            color={this.state.buttonUser1Color}
+                            iconStyle={{ height: 30, width: 30, marginRight: "5%", marginTop: "20%" }}/>}
                         buttonStyle={{ backgroundColor: this.state.buttonUser1BColor, paddingLeft: "5%" }}
                         containerStyle={{ justifyContent: 'center', flex: 1, marginRight: "2%" }} />
                     <Button
                         onPress={() => {
                             this.setState({
-                                userType: "Volunteer",
+                                user_type: "firefighters",
                                 buttonUser1BColor: "#FFFFFF",
                                 buttonUser2BColor: "#5BC100",
                                 buttonUser3BColor: "#FFFFFF",
@@ -65,51 +67,27 @@ export class LoginPage extends Component {
                             });
                             this.setLoginErrorMsg("");
                         }}
-                        title={"志工"}
-                        titleStyle={{ color: this.state.buttonUser2Color }}
-                        icon={<Image
-                            source={require('../../assets/img/baseline_assignment_white_48dp.png')}
-                            style={{ tintColor: this.state.buttonUser2Color, height: 17, width: 17 }}
-                        />}
+                        title={"消防員"}
+                        titleStyle={{ color: this.state.buttonUser2Color, fontSize: 18 }}
+                        icon={<Icon 
+                            name='fire-extinguisher'
+                            type="font-awesome"
+                            color={this.state.buttonUser2Color}
+                            iconStyle={{ height: 30, width: 30, marginRight: "5%", marginTop: "20%" }}/>}
                         containerStyle={{ justifyContent: 'center', flex: 1, marginRight: "2%" }}
                         buttonStyle={{ backgroundColor: this.state.buttonUser2BColor }}
-                    />
-                    <Button
-                        onPress={
-                            () => {this.setState({
-                                userType: "Engineer",
-                                buttonUser1BColor: "#FFFFFF",
-                                buttonUser2BColor: "#FFFFFF",
-                                buttonUser3BColor: "#5BC100",
-                                buttonUser1Color: "#5BC100",
-                                buttonUser2Color: "#5BC100",
-                                buttonUser3Color: "#FFFFFF",
-                            });
-                            this.setLoginErrorMsg("");
-                        }}
-                        title={"技師"}
-                        titleStyle={{ color: this.state.buttonUser3Color }}
-                        icon={<Image
-                            source={require('../../assets/img/progress-wrench.png')}
-                            style={{ tintColor: this.state.buttonUser3Color, height: 17, width: 17 }}
-                        />}
-                        containerStyle={{ justifyContent: 'center', flex: 1 }}
-                        buttonStyle={{ backgroundColor: this.state.buttonUser3BColor }}
                     />
                 </View>
                 <View style={styles.containerInput}>
                     <Input
-                        placeholder={"電話/手機號碼"}
+                        placeholder={"帳號"}
                         leftIcon={
-                            <Image
-                                source={require('../../assets/img/ICONS/Phone.png')}
-                                style={{ tintColor: "#5BC100", height: 17, width: 17 }}
-                            />
-                        }
-                        value={this.state.userPhoneNum}
-                        onChangeText={(userPhoneNum) => {
-                            this.setState({ userPhoneNum: userPhoneNum.replace(/[^0-9]/g, '') });
-                        }}
+                            <Icon 
+                                name='user-circle'
+                                type="font-awesome"
+                                color="#5BC100"
+                                iconStyle={{ height: 24, width: 24 }}/>}
+                        value={this.state.username}
                         keyboardType='phone-pad'
                         inputStyle={{ paddingTop: 20, paddingLeft: 10 }}
                         containerStyle={{ paddingHorizontal: 18 }}
@@ -117,40 +95,34 @@ export class LoginPage extends Component {
                     <Input
                         placeholder={"密碼"}
                         leftIcon={
-                            <Image
-                                source={require('../../assets/img/ICONS/Lock.png')}
-                                style={{ tintColor: "#5BC100", height: 17, width: 17 }}
-                            />
-                        }
+                            <Icon 
+                                name='lock'
+                                type="font-awesome"
+                                color="#5BC100"
+                                iconStyle={{ height: 24, width: 24 }}/>}
                         errorMessage={this.state.loginErrorMsg}
                         errorStyle={{ fontSize: 17 }}
-                        value={this.state.userPassword}
-                        onChangeText={(userPassword) => this.setState({ userPassword: userPassword })}
+                        value={this.state.password}
+                        onChangeText={(password) => this.setState({ password: password })}
                         secureTextEntry={true}
                         autoCapitalize='none'
-                        inputStyle={{ paddingTop: 20, paddingLeft: 10 }}
+                        inputStyle={{ paddingTop: 20, paddingLeft: 5 }}
                         containerStyle={{ paddingHorizontal: 18 }}
-                        leftIconContainerStyle={{ marginLeft: 0, paddingTop: 10, }} />
+                        leftIconContainerStyle={{ marginLeft: 5, paddingTop: 10, }} />
                 </View>
                 <Button
-                    title={"我大概沒用"}
-                    onPress={() => this.props.testlogin()}
-                    containerStyle={styles.containerstyleButtonForgetPW}
-                    buttonStyle={{ backgroundColor: "#F2F1EF" }}
-                    titleStyle={{ fontSize: 14, color: "#BBBBBB", fontWeight: "bold", textDecorationLine: "underline" }} />
-                <Button
                     title={"登入"}
-                    disabled={(this.state.userPhoneNum !== "" && this.state.userPassword !== "") ? false : true}
-                    onPress={() => this.props.login(this.state.userType, this.state.userPhoneNum, this.state.userPassword)}
+                    disabled={(this.state.username !== "" && this.state.password !== "") ? false : true}
+                    onPress={() => this.props.login(this.state.user_type, this.state.username, this.state.password)}
                     //onPress={() => this.props.testlogin()}
                     containerStyle={styles.containerstyleButtonLogin}
                     buttonStyle={{ backgroundColor: "#5BC100" }}
                     titleStyle={{ fontWeight: "bold" }} />
                 <Button
                     title={"註冊"}
-                    disabled={this.state.userType === "HouseOwner" ? false : true}
+                    disabled={this.state.user_type === "citizens" ? false : true}
                     onPress={() => this.props.register()}
-                    containerStyle={[styles.containerstyleButtonRegister, this.state.userType === "HouseOwner" ? { opacity: 1 } : { opacity: 0 }]}
+                    containerStyle={[styles.containerstyleButtonRegister, this.state.user_type === "citizens" ? { opacity: 1 } : { opacity: 0 }]}
                     buttonStyle={{ backgroundColor: "#FFFFFF" }}
                     titleStyle={{ color: "#BBBBBB", fontWeight: "bold" }}
                 />
@@ -197,8 +169,8 @@ const styles = StyleSheet.create({
         width: "82%",
         marginHorizontal: "8%",
         marginTop: "12%",
+        marginBottom: "5%",
         padding: 0,
-        margin: 0,
     },
     containerInput: {
         padding: "2%",

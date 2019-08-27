@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Animated, TouchableOpacity, Image, Alert } from 'react-native';
+import { StyleSheet, View, Animated, TouchableOpacity, Image, Alert, Text } from 'react-native';
 import { createStackNavigator } from 'react-navigation'
 import { fromRight } from 'react-navigation-transitions';
 import LoginPage from './LoginPage';
@@ -76,7 +76,7 @@ export class LoadingPage extends Component {
                                                     ref={this.loginRef}
                                                     login={(userType, userPhoneNum, userPassword)=>this.login(userType, userPhoneNum, userPassword)}
                                                     register={() => this.props.navigation.navigate('RegisterPage')}
-                                                    testlogin={()=>this.props.navigation.navigate('VolunteerBottomTabNavigation')}
+                                                    testlogin={()=>this.props.navigation.navigate('CitizenBottomTabNavigator')}
                                                     testlogout={()=>this.logout()}/>});
                         
                 }
@@ -207,9 +207,12 @@ export class LoadingPage extends Component {
                 activeOpacity={1}>
                 <View style={{ position: "absolute" }}>
                     <Image
-                        source={require('../../assets/img/plainorange-07.png')}
-                        style={{ height: 100, width: 100 }}
+                        source={require('../../assets/icons/FSAS.png')}
+                        style={{ height: 200, width: 200, tintColor: "#5BC100" }}
                     />
+                    <Text
+                        style={{ textAlign: 'center', fontSize: 60, fontWeight: 'bold', color: "#5BC100" }}>
+                    F S A S</Text>
                 </View>
                 <Animated.View style={[styles.container, this.springAnimationXY.getLayout()]}>
                     { this.state.animationComponent }     
