@@ -1,25 +1,27 @@
 
 import { Alert } from 'react-native';
 import qs from 'qs';
-
+import NavigationService from './NavigationService';
 const axios = require('axios');
 const cheerio = require('react-native-cheerio');
 
 export const getUser = async() => {
-    // try {
-    //     const response = await axios.get('http://140.116.104.202:8000/userapp/index/');
-    //     if(response.status === 200) {
-    //         user = response.data;   // Get [username, groups]    
-    //     }
-    //     else {
-    //         Alert.alert('ERROR', 'Failed to get user data');
-    //     }
-    // } catch (error) {
-    //     Alert.alert('ERROR', 'Failed to get user data');
-    //     console.log(error);
-    // } finally {
-    //     setUserState({ user: user && { ...user }, loggedIn: true })
-    // }
+    try {
+        const response = await axios.get('http://140.116.104.202:8000/userapp/index/');
+        if(response.status === 200) {
+            if(response.data.username !== "" && typeof response.data.groups !== 'undefined' && response.data.groups.length > 0) // If logged in, return user data
+                return response.data;
+            else    // Hasn't logged in yet, return null
+                return null;
+        }
+        else {
+            Alert.alert('ERROR', 'Failed to get user data');
+            return null;
+        }
+    } catch (error) {
+        Alert.alert('ERROR', 'Failed to get user data');
+        console.log(error);
+    } 
 }
 
 export const getCsrf = async (url) => {
@@ -40,8 +42,9 @@ export const getCsrf = async (url) => {
 }
 
 /* For both citizen and firefighter login */
-export const logIn = async (username, password, isFireFighter) => {
+export const logIn = async (username, password, user_type) => {
     try {
+        console.log(`I am ${user_type}`)
         /* Get csrf token */
         const csrf = await getCsrf('http://140.116.104.202:8000/userapp/login/');
         /* Try to login, and get response from login page */
@@ -49,22 +52,29 @@ export const logIn = async (username, password, isFireFighter) => {
                 csrfmiddlewaretoken: csrf,  // csrf_token
                 username: username,         
                 password: password,         
-                user_type: (isFireFighter) ? 'firefighters': 'citizens', // For different user login
+                user_type: user_type
             }))
         console.log(login_response.data);
-        /* If login succeed, means that length of groups array isn't 0 */
-        if(login_response.data['groups'].length > 0) {
-            await getUser();    // Get user data
-            Alert.alert('', login_response.data);
-        /* If login failed */
+        /* If login succeed, redirect to specific user page */
+        if(login_response.data.status === 'success') {
+            console.log('sdfsdf')
+            if(user_type === "citizens") {
+                console.log('login as citizens');
+                NavigationService.navigate('CitizenBottomTabNavigator');
+            }
+            else if (user_type === "firefighters") {
+                console.log('login as firefighters');
+                NavigationService.navigate('FirefighterBottomTabNavigator');
+            }
+            Alert.alert('', login_response.data.message);
+        /* Else show login failed */
         } else {
-            Alert.alert('ERROR', login_response.data);
+            Alert.alert('ERROR', login_response.data.message);
         }
     } catch(error) {
         Alert.alert('ERROR', error);
         console.log(error);
     }
-
 }
 
 /* For citizen signup only */
@@ -78,15 +88,17 @@ export const signUp = async (username, password1, password2) => {
             username: username,
             password1: password1,
             password2: password2,
-        }))     
+        }))   
+        console.log(signup_response.data);  
         /* If create new account succeed, login using this account */
         if(signup_response.data.status === 'success') {
-            await logIn(username, password1, false);   
+            Alert.alert('' ,signup_response.data.message); 
+            await logIn(username, password1, 'citizens');    
         }
-        /* Alert and log response from signup */
-        Alert.alert('' ,signup_response.data);
-        console.log(signup_response.data);
-    
+        /* Else show login failed */
+        else {
+            Alert.alert('ERROR' ,signup_response.data.message);  
+        }
     } catch(error) {
         Alert.alert('ERROR', error);
         console.log(error);
@@ -96,19 +108,18 @@ export const signUp = async (username, password1, password2) => {
 export const logOut = async () => {
     try {
         const logout_response = await axios.get('http://140.116.104.202:8000/userapp/logout/');
-        /* Alert and log response from logout */
-        Alert.alert('' ,logout_response.data);
         console.log(logout_response.data);
-        /* If logout succeed */
+        /* If logout succeed, navigate back to login */
         if(logout_response.data.status === 'success') {
-            return true;
+            NavigationService.navigate('LoginPageStackNavigator');
+            Alert.alert('' ,logout_response.data.message);
         }
+        /* Else show logout failed */
         else {
-            return false;
+            Alert.alert('ERROR' ,logout_response.data.message);
         }
     } catch(error) {
         Alert.alert('ERROR', error);
         console.log('ERROR', error);
-        return false;
     }
 }

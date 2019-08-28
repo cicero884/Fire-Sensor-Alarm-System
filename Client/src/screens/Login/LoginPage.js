@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Animated, Image } from 'react-native';
 import { Button, Input, Icon } from 'react-native-elements';
-import { getCsrf } from '../../components/Login/UserAction';
+import { logIn } from '../../components/UserAction';
+import NavigationService from '../../components/NavigationService'
 
 
 export class LoginPage extends Component {
@@ -88,7 +89,8 @@ export class LoginPage extends Component {
                                 color="#5BC100"
                                 iconStyle={{ height: 24, width: 24 }}/>}
                         value={this.state.username}
-                        keyboardType='phone-pad'
+                        onChangeText={(username) => this.setState({ username: username })}
+                        autoCapitalize='none'
                         inputStyle={{ paddingTop: 20, paddingLeft: 10 }}
                         containerStyle={{ paddingHorizontal: 18 }}
                         leftIconContainerStyle={{ marginLeft: 0, paddingTop: 10, }} />
@@ -113,15 +115,14 @@ export class LoginPage extends Component {
                 <Button
                     title={"登入"}
                     disabled={(this.state.username !== "" && this.state.password !== "") ? false : true}
-                    onPress={() => this.props.login(this.state.user_type, this.state.username, this.state.password)}
-                    //onPress={() => this.props.testlogin()}
+                    onPress={() => logIn(this.state.username, this.state.password, this.state.user_type)}
                     containerStyle={styles.containerstyleButtonLogin}
                     buttonStyle={{ backgroundColor: "#5BC100" }}
                     titleStyle={{ fontWeight: "bold" }} />
                 <Button
                     title={"註冊"}
                     disabled={this.state.user_type === "citizens" ? false : true}
-                    onPress={() => this.props.register()}
+                    onPress={() => NavigationService.navigate('RegisterPage')}
                     containerStyle={[styles.containerstyleButtonRegister, this.state.user_type === "citizens" ? { opacity: 1 } : { opacity: 0 }]}
                     buttonStyle={{ backgroundColor: "#FFFFFF" }}
                     titleStyle={{ color: "#BBBBBB", fontWeight: "bold" }}

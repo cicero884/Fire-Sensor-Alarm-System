@@ -12,7 +12,7 @@ import { FirefighterBuildingPage, FirefighterDataPage } from '../screens/Firefig
 
 
 /* Conbine Loading, Register in Login */
-const LoginRegisterPageStackNavigator = createStackNavigator({
+const LoginPageStackNavigator = createStackNavigator({
     LoadingPage: {
         screen: LoadingPage,
     },
@@ -60,6 +60,7 @@ const CitizenBottomTabNavigator = createBottomTabNavigator({
         }, 
     },
 },{
+    initialRouteName: 'CitizenBuildingPage',
     tabBarOptions: { 
         showLabel: false,
         activeBackgroundColor: '#F2F1EF',
@@ -92,6 +93,7 @@ const FirefighterBottomTabNavigator = createBottomTabNavigator({
         }, 
     },
 },{
+    initialRouteName: 'FirefighterBuildingPage',
     tabBarOptions: { 
         showLabel: false,
         activeBackgroundColor: '#F2F1EF',
@@ -101,14 +103,13 @@ const FirefighterBottomTabNavigator = createBottomTabNavigator({
 
 /* Conbine Login, Citizen, Firefighter in App */
 export const LoadingPageSwitchNavigator = createSwitchNavigator({
-    LoginRegisterPageStackNavigator: {
-        screen: LoginRegisterPageStackNavigator,
+    LoginPageStackNavigator: {
+        screen: LoginPageStackNavigator,
     },
     CitizenBottomTabNavigator: {
         screen: CitizenBottomTabNavigator,
     },
     FirefighterBottomTabNavigator: {
         screen: FirefighterBottomTabNavigator,
-    },
-    
+    }, 
 });

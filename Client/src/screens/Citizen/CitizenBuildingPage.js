@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { 
     View,
     Text,
-    StyleSheet
+    StyleSheet,
 } from "react-native";
+import { Button } from "react-native-elements";
+import { logOut } from '../../components/UserAction';
 
 export class CitizenBuildingPage extends Component {
     render() {

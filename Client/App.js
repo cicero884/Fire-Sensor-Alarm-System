@@ -1,8 +1,20 @@
-import { AppRegistry } from 'react-native';
+import React, { Component } from 'react';
 import { 
     createAppContainer, 
 } from 'react-navigation'; 
 import { LoadingPageSwitchNavigator } from './src/components/Navigator';
+import NavigationService from './src/components/NavigationService';
 
-export default createAppContainer(LoadingPageSwitchNavigator);
-AppRegistry.registerComponent('SafeHome', () => AppNavigator);
+const AppContainer =  createAppContainer(LoadingPageSwitchNavigator);
+
+export default class App extends React.Component {  
+    render() {
+		return (
+			<AppContainer
+				ref={ navigatorRef => {
+					NavigationService.setTopLevelNavigator(navigatorRef);
+				}}
+			/>
+		);
+    }
+  }
