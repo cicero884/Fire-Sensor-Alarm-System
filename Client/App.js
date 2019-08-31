@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { StatusBar } from 'react-native';
 import { 
     createAppContainer, 
 } from 'react-navigation'; 
@@ -13,6 +14,10 @@ export default class App extends React.Component {
 			<AppContainer
 				ref={ navigatorRef => {
 					NavigationService.setTopLevelNavigator(navigatorRef);
+				}}
+				onNavigationStateChange={() => {
+					StatusBar.setBarStyle('dark-content');
+					StatusBar.setBackgroundColor('white');
 				}}
 			/>
 		);
