@@ -4,28 +4,12 @@ import {
     Text,
 	StyleSheet,
 } from "react-native";
-import { Input, Button, Overlay } from 'react-native-elements';
+import { Input, Button } from 'react-native-elements';
 import { RNCamera } from 'react-native-camera';
 import BarcodeMask from 'react-native-barcode-mask';
 import { Dimensions } from "react-native";
 import { registerBuilding } from '../../components/UserAction';
 import ExtraDimensions from 'react-native-extra-dimensions-android';
-
-const screenScale = Dimensions.get('screen').scale;
-const screenWidth = ExtraDimensions.getRealWindowWidth() * screenScale;
-const screenHeight = ExtraDimensions.getRealWindowHeight() * screenScale;
-const headerHeight = 56 * screenScale;
-const bottomTabHeight = 49 * screenScale;
-const statusBarHeight =  ExtraDimensions.getStatusBarHeight() * screenScale;
-const softMenuBarHeight = ExtraDimensions.getSoftMenuBarHeight() * screenScale;
-const realViewWidth = screenWidth;
-const realViewHeight = screenHeight - statusBarHeight - headerHeight - bottomTabHeight - softMenuBarHeight;
-const qrCodeWidth = realViewWidth * 0.6;
-const qrCodeHeight = (realViewHeight) * 0.5 * 0.8;
-const qrCodeWidthMin = (realViewWidth - qrCodeWidth) / 2 ;
-const qrCodeWidthMax = qrCodeWidthMin + qrCodeWidth;
-const qrCodeHeightMin = (realViewHeight / 2 - qrCodeHeight) / 2 + statusBarHeight + headerHeight; 
-const qrCodeHeightMax = qrCodeHeightMin + qrCodeHeight;
 
 export class CitizenScanPage extends Component {
 	constructor(props) {
@@ -66,7 +50,6 @@ export class CitizenScanPage extends Component {
 	componentWillMount = () => {
 		this.focusOnListener = this.props.navigation.addListener('willFocus', () => this.addQRCodeScanner());
 		this.focusOffListener = this.props.navigation.addListener('willBlur', () => this.removeQRCodeScanner());
-
 	}
 	
 	componentWillUnmount  = () => {
@@ -192,15 +175,6 @@ export class CitizenScanPage extends Component {
                         	titleStyle={{ color: "#5BC100", fontWeight: "bold" }} />
 					</View>
 				</View> 
-				{/* <Overlay
-					isVisible={true}
-					windowBackgroundColor="rgba(255, 255, 255, .5)"
-					overlayBackgroundColor="red"
-					width="auto"
-					height="auto"
-					>
-					<Text>Hello from Overlay!</Text>
-					</Overlay>;*/}
 			</View>
         );
     }

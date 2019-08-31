@@ -1,10 +1,12 @@
 
-import { Alert } from 'react-native';
+import { Alert, AsyncStorage } from 'react-native';
+import firebase from 'react-native-firebase';
 import qs from 'qs';
 import NavigationService from './NavigationService';
 const axios = require('axios');
 const cheerio = require('react-native-cheerio');
 
+/* For get username & group */
 export const getUser = async() => {
     try {
         const response = await axios.get('http://140.116.104.202:8000/userapp/index/');
@@ -24,6 +26,7 @@ export const getUser = async() => {
     } 
 }
 
+/* For get csrf of post page */
 export const getCsrf = async (url) => {
     try {
         const response = await axios.get(url);  // get html from url
@@ -47,13 +50,16 @@ export const logIn = async (username, password, user_type) => {
         console.log(`I am ${user_type}`)
         /* Get csrf token */
         const csrf = await getCsrf('http://140.116.104.202:8000/userapp/login/');
+        const fcm_token = await getToken();
+        console.log("login:" + fcm_token);
         /* Try to login, and get response from login page */
         const response = await axios.post('http://140.116.104.202:8000/userapp/login/', qs.stringify({ 
-                csrfmiddlewaretoken: csrf,  // csrf_token
-                username: username,         
-                password: password,         
-                user_type: user_type
-            }))
+            csrfmiddlewaretoken: csrf,  // csrf_token
+            username: username,         
+            password: password,         
+            user_type: user_type,
+            fcm_token: fcm_token
+        }))
         console.log(response.data);
         /* If login succeed, redirect to specific user page */
         if(response.data.status === 'success') {
@@ -74,6 +80,19 @@ export const logIn = async (username, password, user_type) => {
         Alert.alert('ERROR', error);
         console.log(error);
     }
+}
+
+/* Get device FCM token */
+export const getToken = async () => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
+    if (!fcmToken) {
+        fcmToken = await firebase.messaging().getToken();
+        if (fcmToken) {
+            // user has a device token
+            await AsyncStorage.setItem('fcmToken', fcmToken);
+        }
+    }
+    return fcmToken;
 }
 
 /* For citizen signup only */
@@ -124,20 +143,14 @@ export const logOut = async () => {
     }
 }
 
-/* For user regiter building */
+/* For citizen regiter building */
 export const registerBuilding = async (building_name, floor_name) => {
-    console.log(building_name);
-    console.log(floor_name);
     try {
         /* Get csrf token */
         const csrf = await getCsrf('http://140.116.104.202:8000/userapp/register_building/'); 
-        const userdata = await getUser();   
-        console.log(csrf);
-        console.log(userdata.username);
         /* Try to regiter building, and get response from regiter building page */
         const response = await axios.post('http://140.116.104.202:8000/userapp/register_building/', qs.stringify({
             csrfmiddlewaretoken: csrf,  // csrf_token
-            username: userdata.username,
             building_name: building_name,
             floor_name: floor_name,
         }))   
@@ -155,4 +168,24 @@ export const registerBuilding = async (building_name, floor_name) => {
         Alert.alert('ERROR', error);
         console.log(error);
     }
+}
+
+/* For citizen get newest registered building name & floor name */
+export const getNowBuilding = async () => {
+    try {
+        const response = await axios.get('http://140.116.104.202:8000/userapp/get_now_building/');
+        if(response.status === 200) {
+            if(response.data.building_name !== "DEF" && response.data.floor_name !== "DEF") // If logged in, return user data
+                return response.data;
+            else    // Hasn't logged in yet, return null
+                return null;
+        }
+        else {
+            Alert.alert('ERROR', 'Failed to get user data');
+            return null;
+        }
+    } catch (error) {
+        Alert.alert('ERROR', 'Failed to get user data');
+        console.log(error);
+    } 
 }

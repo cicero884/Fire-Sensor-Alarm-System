@@ -4,14 +4,24 @@ import {
     Text,
     StyleSheet,
 } from "react-native";
-import { Button } from "react-native-elements";
-import { logOut } from '../../components/UserAction';
+import Svg, { Image, Circle } from 'react-native-svg';
 
 export class CitizenBuildingPage extends Component {
     render() {
         return (
             <View style={styles.container}>
                 <Text>CitizenBuildingPage</Text>
+                <Svg height='100' width='100'>
+                    <Image  
+                        x="5%"
+                        y="5%"
+                        width="90%"
+                        height="90%"
+                        href={{uri: "http://i.imgur.com/jieL5q9.jpg"}}/>
+                    <Circle cx="-50" cy="-50" r="5" fill="pink" />
+                    {/* <Circle cx="50" cy="50" r="5" fill="red" /> */}
+
+                </Svg>
             </View>
         );
     }

@@ -248,4 +248,6 @@ export const LoadingPageSwitchNavigator = createSwitchNavigator({
     FirefighterBottomTabNavigator: {
         screen: FirefighterBottomTabNavigator,
     }, 
+},{
+    initialRouteName: "CitizenBottomTabNavigator"
 });

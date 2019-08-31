@@ -140,6 +140,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-svg')
     implementation project(':react-native-extra-dimensions-android')
     implementation project(':@react-native-community_async-storage')
     implementation project(':react-native-firebase')
@@ -155,10 +156,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.firebase:firebase-firestore:21.0.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
+    implementation 'me.leolin:ShortcutBadger:1.1.21@aar' 
     implementation 'com.android.support:multidex:1.0.3'
     compile(project(':react-native-firebase')) {   
        transitive = false
-   }
+    }
+    compile 'com.android.support:multidex:1.0.1'
 }
 
 // Run this once to be able to run the application with BUCK

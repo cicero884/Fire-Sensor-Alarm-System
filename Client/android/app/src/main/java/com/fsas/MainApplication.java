@@ -3,6 +3,7 @@ package com.fsas;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.horcrux.svg.SvgPackage;
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import io.invertase.firebase.RNFirebasePackage;
@@ -32,18 +33,19 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new ExtraDimensionsPackage(),
-            new AsyncStoragePackage(),
-            new RNFirebasePackage(),
-            new RNFirebaseMessagingPackage(),
-            new RNFirebaseNotificationsPackage(),
-            new VectorIconsPackage(),
-            new ReanimatedPackage(),
-            new MapsPackage(),
-            new RNGestureHandlerPackage(),
-            new RNGeocoderPackage(),
-            new RNCameraPackage()
+        new MainReactPackage(),
+        new SvgPackage(),
+        new ExtraDimensionsPackage(),
+        new AsyncStoragePackage(),
+        new RNFirebasePackage(),
+        new RNFirebaseMessagingPackage(),
+        new RNFirebaseNotificationsPackage(),
+        new VectorIconsPackage(),
+        new ReanimatedPackage(),
+        new MapsPackage(),
+        new RNGestureHandlerPackage(),
+        new RNGeocoderPackage(),
+        new RNCameraPackage()
       );
     }
 
