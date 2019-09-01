@@ -22,19 +22,23 @@ export class LoadingPage extends Component {
     }
 
     cheakIfLoginBefore = async() => {
-        const userdata = await getUser();
-        console.log(userdata);
-        /* If logged in before, redirect to specific user page */
-        if(userdata !== null) {
-            if(userdata.groups[0] === 'citizens') {
-                NavigationService.navigate('CitizenBottomTabNavigator');
+        try {
+            const userdata = await getUser();
+            console.log(userdata);
+            /* If logged in before, redirect to specific user page */
+            if(userdata !== null) {
+                if(userdata.groups[0] === 'citizens') {
+                    NavigationService.navigate('CitizenBottomTabNavigator');
+                }
+                else if(userdata.groups[0] === 'firefighters') {
+                    NavigationService.navigate('FirefighterBottomTabNavigator');
+                }
             }
-            else if(userdata.groups[0] === 'firefighters') {
-                NavigationService.navigate('FirefighterBottomTabNavigator');
+            /* Else show login page */
+            else {
+                this.setState({ animationComponent: <LoginPage/>});
             }
-        }
-        /* Else show login page */
-        else {
+        } catch {
             this.setState({ animationComponent: <LoginPage/>});
         }
     }

@@ -7,6 +7,7 @@ import {
     Picker,
 } from "react-native";
 import { Button } from 'react-native-elements';
+import { getAllBuilding } from '../../components/UserAction';
 import Svg, { Image, Circle } from 'react-native-svg';
 
 export class CitizenBuildingPage extends Component {
@@ -16,6 +17,11 @@ export class CitizenBuildingPage extends Component {
             buliding_name: '',
             floor_name: ''
         };
+    }
+
+    componentWillMount = async() => {
+        const buildings = await getAllBuilding();
+        console.log(buildings);
     }
     
     render() {

@@ -82,13 +82,25 @@ export default class App extends React.Component {
 	}
 	  
 	showAlert = async (title, body) => {
+		const userdata = await getUser();
+		const { username, groups } = userdata;
+		if(username !== "") {
 			Alert.alert(
-			title, body,
-			[
-				{ text: 'OK', onPress: () => console.log('OK Pressed') },
-			],
-			{ cancelable: false },
-		);
+				title, body,
+				[
+					{ text: 'OK', onPress: () => console.log('OK Pressed') },
+				],
+				{ cancelable: false },
+			);
+			if(groups[0] === "citizens") {
+				console.log('alert citizens');
+				NavigationService.navigate('CitizenDataPageStackNavigator');
+			} else if (groups[0] === "firefighters"){
+				console.log('alert firefighter');
+				NavigationService.navigate('FirefighterBuildingPage');
+			}
+		}	
+
 	}
 
 	render() {
