@@ -10,7 +10,7 @@ import {
 import firebase from 'react-native-firebase';
 import { LoadingPageSwitchNavigator } from './src/components/Navigator';
 import NavigationService from './src/components/NavigationService';
-import { getToken } from './src/components/UserAction';
+import { getToken, getUser } from './src/components/UserAction';
 
 const AppContainer =  createAppContainer(LoadingPageSwitchNavigator);
 
@@ -52,7 +52,6 @@ export default class App extends React.Component {
 		* Triggered when a particular notification has been received in foreground
 		* */
 		this.notificationListener = firebase.notifications().onNotification((notification) => {
-			console.log(notification);
 			const { title, body } = notification;
 			this.showAlert(title, body);
 		});
@@ -61,7 +60,6 @@ export default class App extends React.Component {
 		* If your app is in background, you can listen for when a notification is clicked / tapped / opened as follows:
 		* */
 		this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
-			console.log(notificationOpen.notification.data);
             const { data } = notificationOpen.notification;
             this.showAlert(data.title,data.body);
 		});
@@ -70,7 +68,6 @@ export default class App extends React.Component {
 		* If your app is closed, you can check if it was opened by a notification being clicked / tapped / opened as follows:
 		* */
 		const notificationOpen = await firebase.notifications().getInitialNotification();
-		console.log(notificationOpen.notification.data);
 		if (notificationOpen) {
             const { data } = notificationOpen.notification;
             this.showAlert(data.title,data.body);
@@ -84,8 +81,8 @@ export default class App extends React.Component {
 		});
 	}
 	  
-	showAlert(title, body) {
-		Alert.alert(
+	showAlert = async (title, body) => {
+			Alert.alert(
 			title, body,
 			[
 				{ text: 'OK', onPress: () => console.log('OK Pressed') },
