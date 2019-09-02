@@ -10,7 +10,7 @@ import {
     Alert
 } from "react-native";
 import { Button, ListItem } from 'react-native-elements';
-import { getAllBuilding } from '../../components/UserAction';
+import { getAllBuilding, getNowBuilding } from '../../components/UserAction';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -36,6 +36,13 @@ export class CitizenBuildingPage extends Component {
         try{
             await this.updateBuldings();
             await this.updatePlanAndNode();
+            const userNowBuilding = await getNowBuilding();
+            if(userNowBuilding) {
+                await this.setState({building_name: userNowBuilding.building_name});
+                await this.updateFloors();
+                await this.setState({floor_name: userNowBuilding.floor_name.replace(`${userNowBuilding.building_name}_`, "")});
+                await this.updatePlanAndNode();
+            }
         } catch(error) {
             Alert.alert("ERROR", error);
         }
