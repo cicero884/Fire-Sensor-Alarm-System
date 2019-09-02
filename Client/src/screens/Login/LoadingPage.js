@@ -38,8 +38,9 @@ export class LoadingPage extends Component {
             else {
                 this.setState({ animationComponent: <LoginPage/>});
             }
-        } catch {
+        } catch(error) {   // Any other error goes to LoginPage
             this.setState({ animationComponent: <LoginPage/>});
+            Alert.alert('ERROR', error);
         }
     }
 

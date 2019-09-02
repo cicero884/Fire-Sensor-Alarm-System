@@ -83,8 +83,7 @@ export default class App extends React.Component {
 	  
 	showAlert = async (title, body) => {
 		const userdata = await getUser();
-		const { username, groups } = userdata;
-		if(username !== "") {
+		if(userdata !== null) {
 			Alert.alert(
 				title, body,
 				[
@@ -92,10 +91,11 @@ export default class App extends React.Component {
 				],
 				{ cancelable: false },
 			);
-			if(groups[0] === "citizens") {
+			/* Only user that has logged in, show the alert */
+			if(userdata.groups[0] === "citizens") {
 				console.log('alert citizens');
 				NavigationService.navigate('CitizenDataPageStackNavigator');
-			} else if (groups[0] === "firefighters"){
+			} else if (userdata.groups[0] === "firefighters"){
 				console.log('alert firefighter');
 				NavigationService.navigate('FirefighterBuildingPage');
 			}

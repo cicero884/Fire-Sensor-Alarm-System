@@ -18,11 +18,10 @@ export const getUser = async() => {
                 return null;
         }
         else {
-            //Alert.alert('ERROR', 'Failed to get user data');
+            console.log(response);
             return null;
         }
     } catch (error) {
-        //Alert.alert('ERROR', 'Failed to get user data');
         console.log(error);
     } 
 }
@@ -37,10 +36,10 @@ export const getCsrf = async (url) => {
             return $('input[name="csrfmiddlewaretoken"]').val();    // Get csrf_token from html 
         }
         else {
-            Alert.alert('ERROR', 'Failed to get csrf token');
+            console.log(response);
+            return null;
         }
     } catch(error) {
-        Alert.alert('ERROR', error);
         console.log(error);
     }
 }
