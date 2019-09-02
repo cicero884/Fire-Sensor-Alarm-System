@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { 
 	StatusBar, 
-	AsyncStorage, 
 	Alert 
 } from 'react-native';
 import { 
-    createAppContainer, 
+	createAppContainer, 
+	StackActions,
 } from 'react-navigation'; 
 import firebase from 'react-native-firebase';
 import { LoadingPageSwitchNavigator } from './src/components/Navigator';
@@ -52,8 +52,8 @@ export default class App extends React.Component {
 		* Triggered when a particular notification has been received in foreground
 		* */
 		this.notificationListener = firebase.notifications().onNotification((notification) => {
-			const { title, body } = notification;
-			this.showAlert(title, body);
+			const { data } = notification;
+			this.showAlert(data);
 		});
 	  
 		/*
@@ -61,7 +61,7 @@ export default class App extends React.Component {
 		* */
 		this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
             const { data } = notificationOpen.notification;
-            this.showAlert(data.title,data.body);
+            this.showAlert(data);
 		});
 	  
 		/*
@@ -70,7 +70,7 @@ export default class App extends React.Component {
 		const notificationOpen = await firebase.notifications().getInitialNotification();
 		if (notificationOpen) {
             const { data } = notificationOpen.notification;
-            this.showAlert(data.title,data.body);
+            this.showAlert(data);
         }
 		/*
 		* Triggered for data only payload in foreground
@@ -81,23 +81,45 @@ export default class App extends React.Component {
 		});
 	}
 	  
-	showAlert = async (title, body) => {
+	showAlert = async (data) => {
 		const userdata = await getUser();
 		if(userdata !== null) {
-			Alert.alert(
-				title, body,
-				[
-					{ text: 'OK', onPress: () => console.log('OK Pressed') },
-				],
-				{ cancelable: false },
-			);
 			/* Only user that has logged in, show the alert */
 			if(userdata.groups[0] === "citizens") {
 				console.log('alert citizens');
-				NavigationService.navigate('CitizenDataPageStackNavigator');
+				Alert.alert(
+					data.title, data.body,
+					[
+						{
+							text: '更新我的位置', 
+							onPress: () => NavigationService.navigate('CitizenDataPageStackNavigator'),
+							style: 'ok'
+						},
+						{
+					  		text: '察看起火樓層',
+					  		onPress: () => {
+								NavigationService.push('CitizenBuildingPage', {
+									building_name: data.building_name,
+									floor_name: data.floor_name.replace(`${data.building_name}_`, "")
+								});
+							},
+					  		style: 'cancel',
+						},
+					]
+				);
 			} else if (userdata.groups[0] === "firefighters"){
 				console.log('alert firefighter');
-				NavigationService.navigate('FirefighterBuildingPage');
+				Alert.alert(
+					data.title, data.body,
+					[{
+						text: '察看起火樓層',
+						onPress: () => NavigationService.push('FirefighterBuildingPage', {
+							building_name: data.building_name,
+							floor_name: data.floor_name.replace(`${data.building_name}_`, "")
+						}),
+						style: 'cancel',
+					}]
+				);
 			}
 		}	
 

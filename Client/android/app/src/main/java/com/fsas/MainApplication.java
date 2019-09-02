@@ -11,9 +11,7 @@ import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
-import com.airbnb.android.react.maps.MapsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import com.devfd.RNGeocoder.RNGeocoderPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -42,9 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
         new RNFirebaseNotificationsPackage(),
         new VectorIconsPackage(),
         new ReanimatedPackage(),
-        new MapsPackage(),
         new RNGestureHandlerPackage(),
-        new RNGeocoderPackage(),
         new RNCameraPackage()
       );
     }

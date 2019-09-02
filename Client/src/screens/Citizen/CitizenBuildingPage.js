@@ -20,9 +20,9 @@ export class CitizenBuildingPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            building_name: '',
+            building_name: "",
             building_list: undefined,
-            floor_name: '',
+            floor_name: "",
             floor_list: undefined,
             floor_plan: undefined,
             floor_plan_width: 0,
@@ -36,22 +36,36 @@ export class CitizenBuildingPage extends Component {
         try{
             await this.updateBuldings();
             await this.updatePlanAndNode();
-            const userNowBuilding = await getNowBuilding();
-            if(userNowBuilding) {
-                await this.setState({building_name: userNowBuilding.building_name});
-                await this.updateFloors();
-                await this.setState({floor_name: userNowBuilding.floor_name.replace(`${userNowBuilding.building_name}_`, "")});
-                await this.updatePlanAndNode();
-            }
+            this.focusOnListener = await this.props.navigation.addListener('willFocus', () => this.focusOnPage());
+            await this.focusOnPage();
         } catch(error) {
             Alert.alert("ERROR", error);
         }
     }
 
+    componentWillUnmount  = async() => {
+		await this.focusOnListener.remove();
+    }
+    
+    focusOnPage = async() => {
+        console.log('focus on');
+        const userNowBuilding = await getNowBuilding();
+        const { navigation } = this.props;
+        if(userNowBuilding) {
+            const building_name = navigation.getParam('building_name', userNowBuilding.building_name);
+            const floor_name = navigation.getParam('floor_name', userNowBuilding.floor_name.replace(`${userNowBuilding.building_name}_`, ""));
+            await this.setState({building_name: building_name});
+            await this.updateFloors();
+            await this.setState({floor_name: floor_name});
+            await this.updatePlanAndNode();
+            navigation.state.params = null;
+        }
+    }    
+    
+
     updateBuldings = async() => {
         try{
             const buildings = await getAllBuilding();
-            console.log(buildings);
             this.setState({ buildings: buildings });
             let building_list = await buildings.map((s, i) =>{
                 return <Picker.Item key={i} value={s.building_name} label={s.building_name} />
@@ -101,8 +115,6 @@ export class CitizenBuildingPage extends Component {
         
             if(this.state.floor_plan) {
                 Image.getSize(this.state.floor_plan, (width, height) => {
-                    console.log(`${width} ${height}`);
-                    console.log(`${windowWidth} ${windowHeight}`);
                     this.setState({
                         floor_plan_width: windowWidth * 0.9,
                         floor_plan_height: height * (windowWidth / width)  * 0.9

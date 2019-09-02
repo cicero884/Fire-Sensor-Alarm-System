@@ -37,10 +37,29 @@ export class FirefighterBuildingPage extends Component {
         try{
             await this.updateBuldings();
             await this.updatePlanAndNodeAndPeople();
+            this.focusOnListener = await this.props.navigation.addListener('willFocus', () => this.focusOnPage());
+            await this.focusOnPage();
         } catch(error) {
             Alert.alert("ERROR", error);
         }
     }
+
+    componentWillUnmount  = async() => {
+		await this.focusOnListener.remove();
+    }
+
+    focusOnPage = async() => {
+        console.log('focus on');
+        const { navigation } = this.props;
+        const building_name = navigation.getParam('building_name', "");
+        const floor_name = navigation.getParam('floor_name', "");
+        await this.setState({building_name: building_name});
+        await this.updateFloors();
+        await this.setState({floor_name: floor_name});
+        await this.updatePlanAndNodeAndPeople();
+        navigation.state.params = null;
+        
+    }  
 
     updateBuldings = async() => {
         try{
